@@ -20499,10 +20499,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="R18" library="SparkFun-Resistors" deviceset="22OHM1/10W1%(0402)" device="" value="22"/>
 <part name="R19" library="SparkFun-Resistors" deviceset="22OHM1/10W1%(0402)" device="" value="22"/>
 <part name="GND3" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="J1" library="SparkFun-Connectors" deviceset="CONN_05" device=""/>
 <part name="J2" library="SparkFun-Connectors" deviceset="CONN_16" device=""/>
-<part name="GND5" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="SUPPLY9" library="SparkFun-PowerSymbols" deviceset="3.3V" device=""/>
 <part name="GND6" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="SUPPLY10" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
 <part name="U2" library="SparkFun-IC-Power" deviceset="V_REG_AP2112" device="K-3.3V" value="3.3V"/>
@@ -20657,10 +20654,7 @@ Capacitors</text>
 <attribute name="VALUE" x="223.52" y="137.668" size="1.778" layer="96"/>
 </instance>
 <instance part="GND3" gate="1" x="182.88" y="116.84"/>
-<instance part="J1" gate="G$1" x="243.84" y="91.44" rot="R180"/>
 <instance part="J2" gate="G$1" x="223.52" y="76.2" rot="R180"/>
-<instance part="GND5" gate="1" x="233.68" y="81.28"/>
-<instance part="SUPPLY9" gate="G$1" x="233.68" y="99.06"/>
 <instance part="GND6" gate="1" x="198.12" y="91.44"/>
 <instance part="SUPPLY10" gate="G$1" x="208.28" y="99.06"/>
 <instance part="U2" gate="G$1" x="68.58" y="73.66"/>
@@ -20846,12 +20840,6 @@ Capacitors</text>
 <junction x="187.96" y="121.92"/>
 </segment>
 <segment>
-<pinref part="GND5" gate="1" pin="GND"/>
-<wire x1="233.68" y1="83.82" x2="233.68" y2="86.36" width="0.1524" layer="91"/>
-<pinref part="J1" gate="G$1" pin="5"/>
-<wire x1="233.68" y1="86.36" x2="236.22" y2="86.36" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <pinref part="GND6" gate="1" pin="GND"/>
 <wire x1="198.12" y1="93.98" x2="198.12" y2="96.52" width="0.1524" layer="91"/>
 <pinref part="J2" gate="G$1" pin="1"/>
@@ -20910,12 +20898,6 @@ Capacitors</text>
 <pinref part="SUPPLY5" gate="G$1" pin="3.3V"/>
 <pinref part="U1" gate="G3" pin="VDDIO2"/>
 <wire x1="114.3" y1="177.8" x2="114.3" y2="175.26" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="SUPPLY9" gate="G$1" pin="3.3V"/>
-<wire x1="233.68" y1="99.06" x2="233.68" y2="96.52" width="0.1524" layer="91"/>
-<pinref part="J1" gate="G$1" pin="1"/>
-<wire x1="233.68" y1="96.52" x2="236.22" y2="96.52" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="U2" gate="G$1" pin="OUT"/>
@@ -21159,42 +21141,6 @@ Capacitors</text>
 <pinref part="U1" gate="G1" pin="P0[7]"/>
 <wire x1="38.1" y1="152.4" x2="40.64" y2="152.4" width="0.1524" layer="91"/>
 <label x="40.64" y="152.4" size="1.27" layer="95" xref="yes"/>
-</segment>
-</net>
-<net name="SCL" class="0">
-<segment>
-<pinref part="U1" gate="G3" pin="P2[5]"/>
-<wire x1="129.54" y1="157.48" x2="132.08" y2="157.48" width="0.1524" layer="91"/>
-<label x="132.08" y="157.48" size="1.27" layer="95" xref="yes"/>
-</segment>
-<segment>
-<pinref part="J1" gate="G$1" pin="3"/>
-<wire x1="236.22" y1="91.44" x2="233.68" y2="91.44" width="0.1524" layer="91"/>
-<label x="233.68" y="91.44" size="1.27" layer="95" rot="R180" xref="yes"/>
-</segment>
-</net>
-<net name="SDA" class="0">
-<segment>
-<pinref part="U1" gate="G3" pin="P2[6]"/>
-<wire x1="129.54" y1="154.94" x2="132.08" y2="154.94" width="0.1524" layer="91"/>
-<label x="132.08" y="154.94" size="1.27" layer="95" xref="yes"/>
-</segment>
-<segment>
-<pinref part="J1" gate="G$1" pin="4"/>
-<wire x1="236.22" y1="88.9" x2="233.68" y2="88.9" width="0.1524" layer="91"/>
-<label x="233.68" y="88.9" size="1.27" layer="95" rot="R180" xref="yes"/>
-</segment>
-</net>
-<net name="KP_IRQ" class="0">
-<segment>
-<pinref part="U1" gate="G3" pin="P2[7]"/>
-<wire x1="129.54" y1="152.4" x2="132.08" y2="152.4" width="0.1524" layer="91"/>
-<label x="132.08" y="152.4" size="1.27" layer="95" xref="yes"/>
-</segment>
-<segment>
-<pinref part="J1" gate="G$1" pin="2"/>
-<wire x1="233.68" y1="93.98" x2="236.22" y2="93.98" width="0.1524" layer="91"/>
-<label x="233.68" y="93.98" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="N$6" class="0">
