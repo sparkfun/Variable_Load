@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "terminal.h"
 
 #define KP  0.15
 #define KI  0.1
@@ -70,6 +71,8 @@ int main(void)
   USBUART_CDC_Init();
   UART_Start();
   CapSense_InitializeAllBaselines();
+  
+  init();
   for(;;)
   {
     if(0u == CapSense_IsBusy())
@@ -200,22 +203,27 @@ int main(void)
       }
     } // if (systemTimer - 50 > _20HzTick)
         
-    if (systemTimer - 500 > _10HzTick)
+    if (systemTimer - 100 > _10HzTick)
     {
       _10HzTick = systemTimer;
-      memset(buff, 8, 63);
+      
+      while (0u == USBUART_CDCIsReady());
+      cls();
+      while (0u == USBUART_CDCIsReady());
+      goToPos(10,0);
+      while (0u == USBUART_CDCIsReady());
+      sprintf(buff, "%.3f", iSource);
       USBUART_PutString(buff);
+      while (0u == USBUART_CDCIsReady());
+      goToPos(10,1);
+      while (0u == USBUART_CDCIsReady());
+      sprintf(buff, "%.3f", iLimit);
       USBUART_PutString(buff);
-      CyDelay(5);
-      sprintf(buff, "I Source: %.3f\n", iSource);
+      while (0u == USBUART_CDCIsReady());
+      goToPos(10,2);
+      while (0u == USBUART_CDCIsReady());
+      sprintf(buff, "%.3f", vSource);
       USBUART_PutString(buff);
-      CyDelay(5);
-      sprintf(buff, "I Set: %.3f\n", iLimit);
-      USBUART_PutString(buff);
-      CyDelay(5);
-      sprintf(buff, "V Source: %.3f\n", vSource);
-      USBUART_PutString(buff);
-      CyDelay(5);
       //sprintf(buff, "Set point: %.3f", setPoint);
       //USBUART_PutString(buff);
 

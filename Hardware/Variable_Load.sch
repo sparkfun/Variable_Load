@@ -20968,7 +20968,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND6" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="SUPPLY10" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
 <part name="U2" library="SparkFun-IC-Power" deviceset="V_REG_AP2112" device="K-3.3V" value="3.3V"/>
-<part name="J3" library="SparkFun-Connectors" deviceset="USB_MICRO-B" device="_FEMALE-SMT"/>
+<part name="J3" library="SparkFun-Connectors" deviceset="USB_MICRO-B" device="_HALF_PTH" value="AMP FCI 10103594-0001LF"/>
 <part name="SUPPLY11" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
 <part name="F1" library="SparkFun-Fuses" deviceset="PPTC" device="_HALF-AMP" value="6V/0.5A"/>
 <part name="GND7" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
@@ -21056,7 +21056,7 @@ Connections</text>
 <text x="96.52" y="2.54" size="2.54" layer="97">Bypass
 Capacitors</text>
 <text x="165.1" y="7.62" size="2.54" layer="97">Mike Hord</text>
-<text x="241.3" y="7.62" size="2.54" layer="97">01</text>
+<text x="241.3" y="7.62" size="2.54" layer="97">10</text>
 <text x="119.38" y="17.78" size="0.8128" layer="97">JP1 is a ground reference 
 connection only and must
 never be cut!</text>
@@ -21131,7 +21131,9 @@ never be cut!</text>
 <instance part="GND6" gate="1" x="198.12" y="91.44"/>
 <instance part="SUPPLY10" gate="G$1" x="208.28" y="99.06"/>
 <instance part="U2" gate="G$1" x="68.58" y="73.66"/>
-<instance part="J3" gate="G$1" x="22.86" y="73.66" rot="MR0"/>
+<instance part="J3" gate="G$1" x="22.86" y="73.66" smashed="yes" rot="MR0">
+<attribute name="NAME" x="25.4" y="81.28" size="1.778" layer="95" font="vector" rot="MR0"/>
+</instance>
 <instance part="SUPPLY11" gate="G$1" x="53.34" y="81.28"/>
 <instance part="F1" gate="G$1" x="43.18" y="78.74"/>
 <instance part="GND7" gate="1" x="55.88" y="63.5"/>
@@ -21760,8 +21762,8 @@ never be cut!</text>
 <net name="SHIELD" class="0">
 <segment>
 <pinref part="J3" gate="G$1" pin="SHIELD"/>
-<wire x1="15.24" y1="73.66" x2="12.7" y2="73.66" width="0.1524" layer="91"/>
-<label x="12.7" y="73.66" size="1.27" layer="95" rot="R180" xref="yes"/>
+<wire x1="15.24" y1="73.66" x2="10.16" y2="73.66" width="0.1524" layer="91"/>
+<label x="10.16" y="73.66" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="GND-ISO" class="0">
