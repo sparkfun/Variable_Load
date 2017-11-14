@@ -4,5 +4,6 @@
   void goToPos(int x, int y);
   void cls(void);
   void init(void);
+  void putString(const char *buffer);
   
 #endif

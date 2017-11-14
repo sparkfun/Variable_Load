@@ -404,6 +404,7 @@
       <Data key="5ba8bb2a-aaec-48b7-b51c-d3c285bd634e" value="Offset_DAC" />
       <Data key="8b4e37b2-9b26-46bd-8b21-1fad4f4b80c0" value="VRef" />
       <Data key="8eb35c7e-56bb-4211-9b8d-001a96e17768" value="Source_Sense" />
+      <Data key="843db012-e941-4443-b3a0-a9e5294c59ab/ed092b9b-d398-4703-be89-cebf998501f6" value="LCD_LCDPort" />
       <Data key="7930ab39-c0f9-4733-ba4a-4bbab2dbf4d2" value="I_Sense_Low" />
       <Data key="1425177d-0d0e-4468-8bcc-e638e5509a9b" value="Rx_1" />
       <Data key="77715107-f8d5-47e5-a629-0fb83101ac6b" value="I_Sense_High" />
@@ -413,6 +414,7 @@
       <Data key="c2be7ddd-76c1-46c3-bfbe-94c7a5723059/232398c5-3876-4e07-8f5b-7cd7657055e2" value="CapSense_CmodCH0" />
       <Data key="c2be7ddd-76c1-46c3-bfbe-94c7a5723059/dd9c1af8-be5a-4b9e-b10c-b2d9f11dc9fc" value="CapSense_PortCH0" />
       <Data key="cc3bcd7e-5dc0-48ea-9bf6-6aa082be1ada" value="Gate_Drive_Tune_DAC" />
+      <Data key="e851a3b9-efb8-48be-bbb8-b303b216c393" value="Output_On_LED" />
       <Data key="ed092b9b-d398-4703-be89-cebf998501f6" value="Tx_1" />
     </Group>
   </Group>
@@ -3502,7 +3504,7 @@
   <Group key="Pin2">
     <Group key="2f6b5653-ef19-4268-8374-1f037babe7dc">
       <Group key="0">
-        <Data key="Port Format" value="0,2" />
+        <Data key="Port Format" value="1,7" />
       </Group>
     </Group>
     <Group key="5ba8bb2a-aaec-48b7-b51c-d3c285bd634e">
@@ -3520,6 +3522,29 @@
         <Data key="Port Format" value="3,4" />
       </Group>
     </Group>
+    <Group key="843db012-e941-4443-b3a0-a9e5294c59ab/ed092b9b-d398-4703-be89-cebf998501f6">
+      <Group key="0">
+        <Data key="Port Format" value="0,1" />
+      </Group>
+      <Group key="1">
+        <Data key="Port Format" value="0,2" />
+      </Group>
+      <Group key="2">
+        <Data key="Port Format" value="0,3" />
+      </Group>
+      <Group key="3">
+        <Data key="Port Format" value="0,4" />
+      </Group>
+      <Group key="4">
+        <Data key="Port Format" value="0,5" />
+      </Group>
+      <Group key="5">
+        <Data key="Port Format" value="0,6" />
+      </Group>
+      <Group key="6">
+        <Data key="Port Format" value="0,7" />
+      </Group>
+    </Group>
     <Group key="7930ab39-c0f9-4733-ba4a-4bbab2dbf4d2">
       <Group key="0">
         <Data key="Port Format" value="0,4" />
@@ -3532,7 +3557,7 @@
     </Group>
     <Group key="77715107-f8d5-47e5-a629-0fb83101ac6b">
       <Group key="0">
-        <Data key="Port Format" value="0,1" />
+        <Data key="Port Format" value="1,6" />
       </Group>
     </Group>
     <Group key="b577ade5-8823-46bc-aee6-29db0b3d10ea">
@@ -3574,6 +3599,11 @@
         <Data key="Port Format" value="3,6" />
       </Group>
     </Group>
+    <Group key="e851a3b9-efb8-48be-bbb8-b303b216c393">
+      <Group key="0">
+        <Data key="Port Format" value="3,0" />
+      </Group>
+    </Group>
     <Group key="ed092b9b-d398-4703-be89-cebf998501f6">
       <Group key="0">
         <Data key="Port Format" value="12,5" />
@@ -3604,7 +3634,7 @@
     <Data key="CYDEV_VDDD" value="5.0" />
     <Data key="CYDEV_VDDIO0" value="5.0" />
     <Data key="CYDEV_VDDIO1" value="5.0" />
-    <Data key="CYDEV_VDDIO2" value="5.0" />
+    <Data key="CYDEV_VDDIO2" value="3.3" />
     <Data key="CYDEV_VDDIO3" value="5.0" />
     <Data key="CYDEV_WO_NVL_ENABLED" value="False" />
   </Group>

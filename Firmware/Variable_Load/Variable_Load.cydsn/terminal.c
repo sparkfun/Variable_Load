@@ -1,19 +1,29 @@
 #include <stdio.h>
-#include "Project.h"
+#include "project.h"
+#include "terminal.h"
 
 void goToPos(int x, int y)
 {
   char buffer[16];
-  sprintf(buffer, "\x1b[%d;%dH", y, x);
-  USBUART_PutString(buffer);
+  sprintf(buffer, "\x1b[%d;%df", y, x);
+  putString(buffer);
 }
 
 void cls(void)
 {
-  USBUART_PutString("\x1b[2J");
+  putString("\x1b[2J");
 }
 
 void init(void)
 {
-  USBUART_PutString("\x1b\x63");
+  putString("\x1b\x63");
+}
+
+void putString(const char *buffer)
+{
+  if (0 != (USBUART_LINE_CONTROL_DTR & USBUART_GetLineControl()) )
+  {
+    while (0u == USBUART_CDCIsReady());
+    USBUART_PutString(buffer);
+  }
 }
