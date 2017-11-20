@@ -58,47 +58,44 @@ int main(void)
   bool downPressed = false;
   bool entPressed = false;
   bool backPressed = false;
-  bool enableOutput = true;
+  bool enableOutput = false;
   
   char buff[64];
   uint8_t inBuff[64];
   uint8_t floatBuff[64];
   uint8_t incCharIndex = 0;
   
-  //USBUART_Start(0, USBUART_5V_OPERATION);
+  USBUART_Start(0, USBUART_5V_OPERATION);
   CapSense_Start();
   CapSense_InitializeAllBaselines();
   UART_Start();
-  //LCD_Start();
+  LCD_Start();
+  LCD_DisplayOn();
+  LCD_PrintString("Hello, world");
   
-  //init();
+  init();
   for(;;)
   {
-   /* if (0u != USBUART_IsConfigurationChanged())
+    if (0u != USBUART_IsConfigurationChanged())
     {
-      // Initialize IN endpoints when device is configured.
       if (0u != USBUART_GetConfiguration())
       {
-        // Enumeration is done, enable OUT endpoint to receive data 
-        // from host. 
         USBUART_CDC_Init();
       }
-    }*/
+    }
     if(0u == CapSense_IsBusy())
     {
-      /* Update all baselines */
        CapSense_UpdateEnabledBaselines();
-
-      /* Start scanning all enabled sensors */
        CapSense_ScanEnabledWidgets();
     }
     
     // Handle a press of the back key
     if (CapSense_CheckIsWidgetActive(CapSense_BACK__BTN) && backPressed == false)
     {
-      UART_PutString("Button BACK pressed\n\r");
       backPressed = true;
       iLimit = DEFAULT_I_LIM;
+      Output_On_LED_Write(0);
+      enableOutput = false;
     }
     else if (!CapSense_CheckIsWidgetActive(CapSense_BACK__BTN) && backPressed == true)
     {
@@ -107,7 +104,6 @@ int main(void)
     
     if (CapSense_CheckIsWidgetActive(CapSense_ENTER__BTN) && entPressed == false)
     {
-      UART_PutString("Button ENTER pressed\n\r");
       entPressed = true;
       enableOutput = !enableOutput;
       if (enableOutput)
@@ -126,7 +122,6 @@ int main(void)
     
     if (CapSense_CheckIsWidgetActive(CapSense_DOWN__BTN) && downPressed == false)
     {
-      UART_PutString("Button DOWN pressed\n\r");
       downPressed = true;
       if (iLimit < .01) iLimit = 0;
       else if (iLimit < 0.101) {if (iLimit >= 0.01) iLimit -= 0.01;}
@@ -141,7 +136,6 @@ int main(void)
     
     if (CapSense_CheckIsWidgetActive(CapSense_UP__BTN) && upPressed == false)
     {
-      UART_PutString("Button UP pressed\n\r");
       upPressed = true;
       if (iLimit < 0.099) iLimit += 0.01;
       else if (iLimit < 0.5) iLimit += 0.05;
@@ -153,7 +147,7 @@ int main(void)
     {
       upPressed = false;
     }
-/*    
+    
     if (systemTimer - 1 > _1kHzTick)
     {
       _1kHzTick = systemTimer;
@@ -225,7 +219,6 @@ int main(void)
     {
       _10HzTick = systemTimer;
       
-      //while (0u == USBUART_CDCIsReady());
       cls();
       goToPos(1,1);
       putString("I Source:");
@@ -243,8 +236,14 @@ int main(void)
       goToPos(12,3);
       sprintf(buff, "%.3f", vSource);
       putString(buff);
-      //sprintf(buff, "Set point: %.3f", setPoint);
-      //USBUART_PutString(buff);
+      
+      sprintf(buff, "I: %.2f V: %.2f", iLimit, vSource);
+      LCD_Position(0,0);
+      LCD_PrintString(buff);
+      sprintf(buff, "Imeas: %.2f", iSource);
+      LCD_Position(1,0);
+      LCD_PrintString(buff);
+      
 
       if (floatBuff[incCharIndex] == '\0')
       {
@@ -254,7 +253,7 @@ int main(void)
             iLimit < 0.0) iLimit = 0.0;
       }
     }
-*/
+
   }
 }
 

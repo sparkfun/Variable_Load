@@ -15759,6 +15759,27 @@ chip</description>
 </device>
 </devices>
 </deviceset>
+<deviceset name="4.7KOHM" prefix="R">
+<description>&lt;h3&gt;4.7kΩ resistor&lt;/h3&gt;
+&lt;p&gt;A resistor is a passive two-terminal electrical component that implements electrical resistance as a circuit element. Resistors act to reduce current flow, and, at the same time, act to lower voltage levels within circuits. - Wikipedia&lt;/p&gt;</description>
+<gates>
+<gate name="G$1" symbol="RESISTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="-0603-1/10W-1%" package="0603">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="RES-07857"/>
+<attribute name="VALUE" value="4.7k"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
 </devicesets>
 </library>
 <library name="SparkFun-Capacitors">
@@ -21011,6 +21032,10 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </part>
 <part name="R12" library="SparkFun-Resistors" deviceset="560OHM" device="_0402_1%" value="560"/>
 <part name="GND5" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
+<part name="R13" library="SparkFun-Resistors" deviceset="1KOHM" device="-0603-1/10W-1%" value="1k"/>
+<part name="R14" library="SparkFun-Resistors" deviceset="4.7KOHM" device="-0603-1/10W-1%" value="4.7k"/>
+<part name="GND14" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
+<part name="SUPPLY9" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -21128,7 +21153,7 @@ never be cut!</text>
 </instance>
 <instance part="GND3" gate="1" x="182.88" y="116.84"/>
 <instance part="J2" gate="G$1" x="223.52" y="76.2" rot="R180"/>
-<instance part="GND6" gate="1" x="198.12" y="91.44"/>
+<instance part="GND6" gate="1" x="190.5" y="91.44"/>
 <instance part="SUPPLY10" gate="G$1" x="208.28" y="99.06"/>
 <instance part="U2" gate="G$1" x="68.58" y="73.66"/>
 <instance part="J3" gate="G$1" x="22.86" y="73.66" smashed="yes" rot="MR0">
@@ -21184,6 +21209,10 @@ never be cut!</text>
 <attribute name="VALUE" x="157.734" y="121.666" size="1.778" layer="96" font="vector" align="top-center"/>
 </instance>
 <instance part="GND5" gate="1" x="162.56" y="116.84"/>
+<instance part="R13" gate="G$1" x="243.84" y="71.12" rot="R90"/>
+<instance part="R14" gate="G$1" x="243.84" y="86.36" rot="R90"/>
+<instance part="GND14" gate="1" x="243.84" y="60.96"/>
+<instance part="SUPPLY9" gate="G$1" x="243.84" y="93.98"/>
 </instances>
 <busses>
 </busses>
@@ -21324,14 +21353,9 @@ never be cut!</text>
 </segment>
 <segment>
 <pinref part="GND6" gate="1" pin="GND"/>
-<wire x1="198.12" y1="93.98" x2="198.12" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="190.5" y1="93.98" x2="190.5" y2="96.52" width="0.1524" layer="91"/>
 <pinref part="J2" gate="G$1" pin="1"/>
-<wire x1="198.12" y1="96.52" x2="210.82" y2="96.52" width="0.1524" layer="91"/>
-<wire x1="210.82" y1="96.52" x2="213.36" y2="96.52" width="0.1524" layer="91"/>
-<wire x1="210.82" y1="96.52" x2="210.82" y2="91.44" width="0.1524" layer="91"/>
-<junction x="210.82" y="96.52"/>
-<pinref part="J2" gate="G$1" pin="3"/>
-<wire x1="210.82" y1="91.44" x2="213.36" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="190.5" y1="96.52" x2="213.36" y2="96.52" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="J3" gate="G$1" pin="GND"/>
@@ -21380,6 +21404,11 @@ never be cut!</text>
 <pinref part="GND5" gate="1" pin="GND"/>
 <wire x1="157.48" y1="121.92" x2="162.56" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="162.56" y1="121.92" x2="162.56" y2="119.38" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R13" gate="G$1" pin="1"/>
+<pinref part="GND14" gate="1" pin="GND"/>
+<wire x1="243.84" y1="66.04" x2="243.84" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="3.3V" class="0">
@@ -21510,6 +21539,11 @@ never be cut!</text>
 <pinref part="SUPPLY14" gate="G$1" pin="5V"/>
 <wire x1="185.42" y1="76.2" x2="182.88" y2="76.2" width="0.1524" layer="91"/>
 <wire x1="182.88" y1="76.2" x2="182.88" y2="83.82" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="SUPPLY9" gate="G$1" pin="5V"/>
+<pinref part="R14" gate="G$1" pin="2"/>
+<wire x1="243.84" y1="93.98" x2="243.84" y2="91.44" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$10" class="0">
@@ -21895,6 +21929,22 @@ never be cut!</text>
 <pinref part="D1" gate="G$1" pin="C"/>
 <pinref part="R12" gate="G$1" pin="1"/>
 <wire x1="147.32" y1="121.92" x2="142.24" y2="121.92" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="CONTRAST" class="0">
+<segment>
+<pinref part="J2" gate="G$1" pin="3"/>
+<wire x1="210.82" y1="91.44" x2="213.36" y2="91.44" width="0.1524" layer="91"/>
+<label x="210.82" y="91.44" size="1.27" layer="95" rot="R180" xref="yes"/>
+</segment>
+<segment>
+<pinref part="R13" gate="G$1" pin="2"/>
+<pinref part="R14" gate="G$1" pin="1"/>
+<wire x1="243.84" y1="76.2" x2="243.84" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="243.84" y1="78.74" x2="243.84" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="243.84" y1="78.74" x2="241.3" y2="78.74" width="0.1524" layer="91"/>
+<junction x="243.84" y="78.74"/>
+<label x="241.3" y="78.74" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 </nets>
