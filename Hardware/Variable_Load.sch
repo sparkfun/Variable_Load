@@ -21069,16 +21069,16 @@ near U2</text>
 <wire x1="86.36" y1="43.18" x2="86.36" y2="76.2" width="0.1524" layer="97" style="longdash"/>
 <wire x1="86.36" y1="43.18" x2="114.3" y2="43.18" width="0.1524" layer="97" style="longdash"/>
 <wire x1="114.3" y1="43.18" x2="114.3" y2="0" width="0.1524" layer="97" style="longdash"/>
-<text x="88.9" y="63.5" size="2.54" layer="97">Feedback,
+<text x="88.9" y="63.5" size="2.54" layer="97" font="vector">Feedback,
 Sense,
 Control</text>
-<text x="66.04" y="45.72" size="2.54" layer="97">Power Input</text>
-<text x="175.26" y="38.1" size="2.54" layer="97">LCD and
+<text x="61.468" y="44.45" size="2.54" layer="97" font="vector">Power Input</text>
+<text x="175.26" y="38.1" size="2.54" layer="97" font="vector">LCD and
 Keypad
 Connections</text>
-<text x="228.6" y="111.76" size="2.54" layer="97">PSoC Power</text>
-<text x="162.56" y="78.74" size="2.54" layer="97">PSoC</text>
-<text x="96.52" y="2.54" size="2.54" layer="97">Bypass
+<text x="225.044" y="111.252" size="2.54" layer="97" font="vector">PSoC Power</text>
+<text x="162.56" y="78.74" size="2.54" layer="97" font="vector">PSoC</text>
+<text x="91.948" y="1.524" size="2.54" layer="97" font="vector">Bypass
 Capacitors</text>
 <text x="165.1" y="7.62" size="2.54" layer="97">Mike Hord</text>
 <text x="241.3" y="7.62" size="2.54" layer="97">11</text>
