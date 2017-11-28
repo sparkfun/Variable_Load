@@ -21081,7 +21081,7 @@ Connections</text>
 <text x="96.52" y="2.54" size="2.54" layer="97">Bypass
 Capacitors</text>
 <text x="165.1" y="7.62" size="2.54" layer="97">Mike Hord</text>
-<text x="241.3" y="7.62" size="2.54" layer="97">10</text>
+<text x="241.3" y="7.62" size="2.54" layer="97">11</text>
 <text x="119.38" y="17.78" size="0.8128" layer="97">JP1 is a ground reference 
 connection only and must
 never be cut!</text>
