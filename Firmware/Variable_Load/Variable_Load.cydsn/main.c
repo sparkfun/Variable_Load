@@ -62,6 +62,8 @@ int main(void)
   
   char buff[64];
   uint8_t inBuff[64];
+  char testBuff[2];
+  uint8_t testBuffIndex = 0;
   uint8_t floatBuff[64];
   uint8_t incCharIndex = 0;
   
@@ -83,6 +85,24 @@ int main(void)
         USBUART_CDC_Init();
       }
     }
+    if (UART_GetRxBufferSize())
+    {
+      while (UART_GetRxBufferSize())
+      {
+        testBuff[testBuffIndex++] = UART_GetChar();
+      }
+      if (testBuff[testBuffIndex - 1] == '1')
+      {
+        UART_PutChar('2');
+      }
+    }
+    if (testBuffIndex > 1)
+    {
+      testBuffIndex = 0;
+      testBuff[0] = '\0';
+      testBuff[1] = '\0';
+    }
+    
     if(0u == CapSense_IsBusy())
     {
        CapSense_UpdateEnabledBaselines();
@@ -248,6 +268,7 @@ int main(void)
       if (floatBuff[incCharIndex] == '\0')
       {
         iLimit = atoff((char*)floatBuff);
+        memset(floatBuff, 1, 64);
         incCharIndex = 0;
         if (iLimit > 4.0 ||
             iLimit < 0.0) iLimit = 0.0;
