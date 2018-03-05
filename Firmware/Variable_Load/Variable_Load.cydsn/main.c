@@ -18,12 +18,26 @@
 #define SourceDMA_SRC_BASE (CYDEV_PERIPH_BASE)
 #define SourceDMA_DST_BASE (CYDEV_SRAM_BASE)
 
+/* Defines for CurrentDMA */
+#define CurrentDMA_BYTES_PER_BURST 3
+#define CurrentDMA_REQUEST_PER_BURST 1
+#define CurrentDMA_SRC_BASE (CYDEV_PERIPH_BASE)
+#define CurrentDMA_DST_BASE (CYDEV_SRAM_BASE)
+
+/* Variable declarations for CurrentDMA */
+/* Move these variable declarations to the top of the function */
+static uint8 CurrentDMA_Chan;
+static uint8 CurrentDMA_TD[1];
+
 /* Variable declarations for SourceDMA */
 /* Move these variable declarations to the top of the function */
 #define ADCSAMPLES 40
 static uint8 SourceDMA_Chan;
 static uint8 SourceDMA_TD[1];
 static uint16 SourceData[ADCSAMPLES];
+
+#define CURRENTSAMPLES 10
+static uint32 CurrentReadings[CURRENTSAMPLES];
 
 void DoPid();
 void OutputEnable(bool v);
@@ -87,6 +101,18 @@ int main(void)
 	CyDmaChEnable(SourceDMA_Chan, 1);
 	Source_ADC_StartConvert();
 
+    /* DMA Configuration for CurrentDMA */
+    CurrentDMA_Chan = CurrentDMA_DmaInitialize(CurrentDMA_BYTES_PER_BURST, CurrentDMA_REQUEST_PER_BURST, 
+        HI16(CurrentDMA_SRC_BASE), HI16(CurrentDMA_DST_BASE));
+    CurrentDMA_TD[0] = CyDmaTdAllocate();
+    CyDmaTdSetConfiguration(CurrentDMA_TD[0], 4 * CURRENTSAMPLES, CurrentDMA_TD[0], CY_DMA_TD_INC_DST_ADR | CY_DMA_TD_AUTO_EXEC_NEXT);
+    CyDmaTdSetAddress(CurrentDMA_TD[0], LO16((uint32)I_Source_ADC_DEC_SAMP_PTR), LO16((uint32)CurrentReadings));
+    CyDmaChSetInitialTd(CurrentDMA_Chan, CurrentDMA_TD[0]);
+    CyDmaChEnable(CurrentDMA_Chan, 1);
+    I_Source_ADC_StartConvert();
+    
+    PIDIsr_Start();
+    
 	init();
 
 	for (;;)
@@ -184,7 +210,7 @@ int main(void)
 
 		vSource = Source_ADC_CountsTo_mVolts(vAve/4); // 10*vAve/40
 
-		if (systemTimer - 200 > SlowTick)
+		if (systemTimer - 20 > SlowTick)
 		{
 			SlowTick = systemTimer;
 			cls();
@@ -248,7 +274,7 @@ int main(void)
 	}
 }
 
-void I_Source_ADC_ISR1_EntryCallback()
+void PIDIsr_Interrupt_InterruptCallback()
 {
 	systemTimer++;
 	DoPid();
@@ -263,9 +289,13 @@ void DoPid()
 	static uint16_t grossSetPoint = 0;
 	static uint16_t fineSetPoint = 0;
 	static int setPoint = 0;
+    static int i;
 
-	iSourceRaw = I_Source_ADC_GetResult32();
-	iSource = I_Source_ADC_CountsTo_mVolts(10*iSourceRaw);
+	iSourceRaw = 0;
+    for (i = 0; i < 10; i++)
+        iSourceRaw += CurrentReadings[i];
+        
+	iSource = I_Source_ADC_CountsTo_mVolts(iSourceRaw);
 
 	error = iLimit - iSource;
 	integral = integral + error;

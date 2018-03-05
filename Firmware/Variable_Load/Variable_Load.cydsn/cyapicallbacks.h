@@ -14,8 +14,8 @@
     
     /*Define your macro callbacks here */
     /*For more information, refer to the Macro Callbacks topic in the PSoC Creator Help.*/
-#define I_Source_ADC_ISR1_ENTRY_CALLBACK
-    void I_Source_ADC_ISR1_EntryCallback();
-  
+#define PIDIsr_INTERRUPT_INTERRUPT_CALLBACK
+    void PIDIsr_Interrupt_InterruptCallback();
+ 
 #endif /* CYAPICALLBACKS_H */   
 /* [] */
