@@ -18,10 +18,21 @@
 #define SourceDMA_SRC_BASE (CYDEV_PERIPH_BASE)
 #define SourceDMA_DST_BASE (CYDEV_SRAM_BASE)
 
+/* Defines for BufferDMA */
+#define BufferDMA_BYTES_PER_BURST 4
+#define BufferDMA_REQUEST_PER_BURST 1
+#define BufferDMA_SRC_BASE (CYDEV_PERIPH_BASE)
+#define BufferDMA_DST_BASE (CYDEV_SRAM_BASE)
+
+/* Variable declarations for BufferDMA */
+/* Move these variable declarations to the top of the function */
+uint8 BufferDMA_Chan;
+uint8 BufferDMA_TD[1];
+
 /* Defines for CurrentDMA */
-#define CurrentDMA_BYTES_PER_BURST 3
+#define CurrentDMA_BYTES_PER_BURST 4
 #define CurrentDMA_REQUEST_PER_BURST 1
-#define CurrentDMA_SRC_BASE (CYDEV_PERIPH_BASE)
+#define CurrentDMA_SRC_BASE (CYDEV_SRAM_BASE)
 #define CurrentDMA_DST_BASE (CYDEV_SRAM_BASE)
 
 /* Variable declarations for CurrentDMA */
@@ -34,10 +45,11 @@ static uint8 CurrentDMA_TD[1];
 #define ADCSAMPLES 40
 static uint8 SourceDMA_Chan;
 static uint8 SourceDMA_TD[1];
-static uint16 SourceData[ADCSAMPLES];
+static volatile uint16 SourceData[ADCSAMPLES];
 
 #define CURRENTSAMPLES 10
-static uint32 CurrentReadings[CURRENTSAMPLES];
+static volatile uint32 CurrentReadings[CURRENTSAMPLES];
+static uint32 DMABuffer;
 
 void DoPid();
 void OutputEnable(bool v);
@@ -50,6 +62,7 @@ volatile static int vSource = 0;
 volatile static int iSource = 0;
 volatile static uint32 dt = 0;
 volatile static int vMin = DEFAULT_V_MIN;
+volatile static uint32 maHours;
 
 bool enableOutput = false;
 
@@ -57,7 +70,6 @@ int main(void)
 {
 	static int i;
 	static int vAve;
-	static char t;
 	static char buff[64];
 	static uint8 inBuff[64];
 	static char floatBuff[64];
@@ -95,24 +107,37 @@ int main(void)
 	SourceDMA_Chan = SourceDMA_DmaInitialize(SourceDMA_BYTES_PER_BURST, SourceDMA_REQUEST_PER_BURST,
 		HI16(SourceDMA_SRC_BASE), HI16(SourceDMA_DST_BASE));
 	SourceDMA_TD[0] = CyDmaTdAllocate();
-	CyDmaTdSetConfiguration(SourceDMA_TD[0], 2 * ADCSAMPLES, SourceDMA_TD[0], CY_DMA_TD_INC_DST_ADR | CY_DMA_TD_AUTO_EXEC_NEXT);
+	CyDmaTdSetConfiguration(SourceDMA_TD[0], 2 * ADCSAMPLES, SourceDMA_TD[0], CY_DMA_TD_INC_DST_ADR);
 	CyDmaTdSetAddress(SourceDMA_TD[0], LO16((uint32)Source_ADC_SAR_WRK0_PTR), LO16((uint32)SourceData));
 	CyDmaChSetInitialTd(SourceDMA_Chan, SourceDMA_TD[0]);
-	CyDmaChEnable(SourceDMA_Chan, 1);
 	Source_ADC_StartConvert();
+	CyDmaChEnable(SourceDMA_Chan, 1);
 
-    /* DMA Configuration for CurrentDMA */
-    CurrentDMA_Chan = CurrentDMA_DmaInitialize(CurrentDMA_BYTES_PER_BURST, CurrentDMA_REQUEST_PER_BURST, 
-        HI16(CurrentDMA_SRC_BASE), HI16(CurrentDMA_DST_BASE));
-    CurrentDMA_TD[0] = CyDmaTdAllocate();
-    CyDmaTdSetConfiguration(CurrentDMA_TD[0], 4 * CURRENTSAMPLES, CurrentDMA_TD[0], CY_DMA_TD_INC_DST_ADR | CY_DMA_TD_AUTO_EXEC_NEXT);
-    CyDmaTdSetAddress(CurrentDMA_TD[0], LO16((uint32)I_Source_ADC_DEC_SAMP_PTR), LO16((uint32)CurrentReadings));
-    CyDmaChSetInitialTd(CurrentDMA_Chan, CurrentDMA_TD[0]);
-    CyDmaChEnable(CurrentDMA_Chan, 1);
-    I_Source_ADC_StartConvert();
-    
-    PIDIsr_Start();
-    
+	/* DMA Configuration for BufferDMA */
+
+	BufferDMA_Chan = BufferDMA_DmaInitialize(BufferDMA_BYTES_PER_BURST, BufferDMA_REQUEST_PER_BURST,
+		HI16(BufferDMA_SRC_BASE), HI16(BufferDMA_DST_BASE));
+	BufferDMA_TD[0] = CyDmaTdAllocate();
+	CyDmaTdSetConfiguration(BufferDMA_TD[0], 4, BufferDMA_TD[0], TD_INC_SRC_ADR | BufferDMA__TD_TERMOUT_EN);
+	CyDmaTdSetAddress(BufferDMA_TD[0], LO16((uint32)I_Source_ADC_DEC_SAMP_PTR), LO16((uint32)DMABuffer));
+	CyDmaChSetInitialTd(BufferDMA_Chan, BufferDMA_TD[0]);
+
+	/* DMA Configuration for CurrentDMA */
+	CurrentDMA_Chan = CurrentDMA_DmaInitialize(CurrentDMA_BYTES_PER_BURST, CurrentDMA_REQUEST_PER_BURST,
+		HI16(CurrentDMA_SRC_BASE), HI16(CurrentDMA_DST_BASE));
+	CurrentDMA_TD[0] = CyDmaTdAllocate();
+	CyDmaTdSetConfiguration(CurrentDMA_TD[0], 4 * CURRENTSAMPLES, CurrentDMA_TD[0], TD_INC_DST_ADR | CurrentDMA__TD_TERMOUT_EN);
+	CyDmaTdSetAddress(CurrentDMA_TD[0], LO16((uint32)DMABuffer), LO16((uint32)CurrentReadings));
+	CyDmaChSetInitialTd(CurrentDMA_Chan, CurrentDMA_TD[0]);
+
+	/*Change the ADC coherent key to high byte*/
+	I_Source_ADC_DEC_COHER_REG |= I_Source_ADC_DEC_SAMP_KEY_HIGH;
+	I_Source_ADC_StartConvert();
+	CyDmaChEnable(BufferDMA_Chan, 1);
+	CyDmaChEnable(CurrentDMA_Chan, 1);
+
+	PIDIsr_Start();
+
 	init();
 
 	for (;;)
@@ -136,8 +161,8 @@ int main(void)
 		{
 			backPressed = true;
 			iLimit = DEFAULT_I_LIM;
-            vMin = DEFAULT_V_MIN;
-            OutputEnable(false);
+			vMin = DEFAULT_V_MIN;
+			OutputEnable(false);
 		}
 		else if (!CapSense_CheckIsWidgetActive(CapSense_BACK__BTN) && backPressed == true)
 		{
@@ -208,8 +233,7 @@ int main(void)
 		for (i = 0; i < ADCSAMPLES; i++)
 			vAve += SourceData[i];
 
-		vSource = Source_ADC_CountsTo_mVolts(vAve/4); // 10*vAve/40
-
+		vSource = Source_ADC_CountsTo_mVolts(vAve / 4); // 10*vAve/40
 		if (systemTimer - 20 > SlowTick)
 		{
 			SlowTick = systemTimer;
@@ -222,6 +246,8 @@ int main(void)
 			putString("V Source:");
 			goToPos(1, 4);
 			putString("V Min:");
+			goToPos(1, 5);
+			putString("mA Hours:");
 			goToPos(12, 1);
 			if (iSource < 0) iSource *= -1;
 			sprintf(buff, "%6.3f", iSource / 1000.0f);
@@ -235,6 +261,9 @@ int main(void)
 			goToPos(12, 4);
 			sprintf(buff, "%6.3f", vMin / 1000.0f);
 			putString(buff);
+			goToPos(12, 5);
+			sprintf(buff, "%6.2f", maHours / 3600.0f);
+			putString(buff);
 
 			sprintf(buff, "I: %.2f V: %.2f", iLimit / 1000.0f, vSource / 1000.0f);
 			LCD_Position(0, 0);
@@ -243,25 +272,24 @@ int main(void)
 			LCD_Position(1, 0);
 			LCD_PrintString(buff);
 
-
 			if (floatBuff[incCharIndex] == '\0')
 			{
-				sscanf(floatBuff, "%c%f", &t, &fiLimit);
-				switch (t)
+				fiLimit = atoff(floatBuff + 1);
+				switch (toupper(floatBuff[0]))
 				{
-				case 'i':
 				case 'I':
 					if (fiLimit > 4.000 ||
 						fiLimit < 0.0) fiLimit = 0.0;
 					iLimit = 1000.0*fiLimit;
 					break;
-				case 'v':
 				case 'V':
 					vMin = 1000.0*fiLimit;
 					break;
-				case 'e':
 				case 'E':
 					OutputEnable(fiLimit == 1);
+					break;
+				case 'R':
+					maHours = 0;
 					break;
 				default:
 					break;
@@ -289,12 +317,13 @@ void DoPid()
 	static uint16_t grossSetPoint = 0;
 	static uint16_t fineSetPoint = 0;
 	static int setPoint = 0;
-    static int i;
+	static int i;
+	static int loopCount = 0;
 
 	iSourceRaw = 0;
-    for (i = 0; i < 10; i++)
-        iSourceRaw += CurrentReadings[i];
-        
+	for (i = 0; i < 10; i++)
+		iSourceRaw += CurrentReadings[i];
+
 	iSource = I_Source_ADC_CountsTo_mVolts(iSourceRaw);
 
 	error = iLimit - iSource;
@@ -318,9 +347,9 @@ void DoPid()
 	if (fineSetPoint > 255)
 		fineSetPoint = 255;
 
-	// Finally, one last check: if the source voltage is below 2.0V,
-	//  the output is disabled, or the total power is greater than 15W,
-	//  we want to clear everything and zero the gate drive.
+	// Finally, one last check: if the source voltage is below vMin,
+	//  or the total power is greater than 15W,
+	//  disable.
 	if ((vSource < vMin) ||
 		(vSource * iLimit > 15000000))
 		OutputEnable(false);
@@ -331,6 +360,14 @@ void DoPid()
 		integral = 0;
 		grossSetPoint = 0;
 		fineSetPoint = 0;
+	}
+	else
+	{
+		if (loopCount++ == 100)
+		{
+			maHours += iSource;
+			loopCount = 0;
+		}
 	}
 
 	Offset_SetValue(grossSetPoint);
