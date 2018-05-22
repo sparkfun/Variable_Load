@@ -1973,6 +1973,46 @@
 </CyGuid_2f73275c-45bf-46ba-b3b1-00a2fe0c8dd8>
 <filters />
 </CyGuid_ebc4f06d-207f-49c2-a540-72acf4adabc0>
+<CyGuid_8b8ab257-35d3-4473-b57b-36315200b38b type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtFileSerialize" version="3" xml_contents_version="1">
+<CyGuid_31768f72-0253-412b-af77-e7dba74d1330 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtItemSerialize" version="2" name="cybootloader.icf" persistent="Generated_Source\PSoC5\cybootloader.icf">
+<Hidden v="False" />
+</CyGuid_31768f72-0253-412b-af77-e7dba74d1330>
+<build_action v="OTHER;;;;" />
+<PropertyDeltas />
+</CyGuid_8b8ab257-35d3-4473-b57b-36315200b38b>
+<CyGuid_8b8ab257-35d3-4473-b57b-36315200b38b type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtFileSerialize" version="3" xml_contents_version="1">
+<CyGuid_31768f72-0253-412b-af77-e7dba74d1330 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtItemSerialize" version="2" name="cybootloader.c" persistent="Generated_Source\PSoC5\cybootloader.c">
+<Hidden v="False" />
+</CyGuid_31768f72-0253-412b-af77-e7dba74d1330>
+<build_action v="SOURCE_C;CortexM3;;;" />
+<PropertyDeltas />
+</CyGuid_8b8ab257-35d3-4473-b57b-36315200b38b>
+<CyGuid_ebc4f06d-207f-49c2-a540-72acf4adabc0 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtFolderSerialize" version="3">
+<CyGuid_2f73275c-45bf-46ba-b3b1-00a2fe0c8dd8 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtBaseContainerSerialize" version="1">
+<CyGuid_31768f72-0253-412b-af77-e7dba74d1330 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtItemSerialize" version="2" name="Bootloadable" persistent="">
+<Hidden v="False" />
+</CyGuid_31768f72-0253-412b-af77-e7dba74d1330>
+<CyGuid_0820c2e7-528d-4137-9a08-97257b946089 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtItemListSerialize" version="2">
+<dependencies>
+<CyGuid_8b8ab257-35d3-4473-b57b-36315200b38b type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtFileSerialize" version="3" xml_contents_version="1">
+<CyGuid_31768f72-0253-412b-af77-e7dba74d1330 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtItemSerialize" version="2" name="Bootloadable.c" persistent="Generated_Source\PSoC5\Bootloadable.c">
+<Hidden v="False" />
+</CyGuid_31768f72-0253-412b-af77-e7dba74d1330>
+<build_action v="SOURCE_C;CortexM3;;;" />
+<PropertyDeltas />
+</CyGuid_8b8ab257-35d3-4473-b57b-36315200b38b>
+<CyGuid_8b8ab257-35d3-4473-b57b-36315200b38b type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtFileSerialize" version="3" xml_contents_version="1">
+<CyGuid_31768f72-0253-412b-af77-e7dba74d1330 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtItemSerialize" version="2" name="Bootloadable.h" persistent="Generated_Source\PSoC5\Bootloadable.h">
+<Hidden v="False" />
+</CyGuid_31768f72-0253-412b-af77-e7dba74d1330>
+<build_action v="HEADER;;;;" />
+<PropertyDeltas />
+</CyGuid_8b8ab257-35d3-4473-b57b-36315200b38b>
+</dependencies>
+</CyGuid_0820c2e7-528d-4137-9a08-97257b946089>
+</CyGuid_2f73275c-45bf-46ba-b3b1-00a2fe0c8dd8>
+<filters />
+</CyGuid_ebc4f06d-207f-49c2-a540-72acf4adabc0>
 </dependencies>
 </CyGuid_0820c2e7-528d-4137-9a08-97257b946089>
 </CyGuid_2f73275c-45bf-46ba-b3b1-00a2fe0c8dd8>
@@ -2094,7 +2134,7 @@
 <name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM3@Linker@General@Custom Linker Script" v="" />
 <name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM3@Linker@General@Use Default Libs" v="True" />
 <name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM3@Linker@General@Use Nano Lib" v="True" />
-<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM3@Linker@General@Enable Float printf" v="False" />
+<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM3@Linker@General@Enable Float printf" v="True" />
 <name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM3@Linker@Optimization@Remove Unused Functions" v="True" />
 <name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM3@Linker@Command Line@Command Line" v="" />
 <name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM3@Linker@Optimization@SHARED Generate Debugging Information" v="" />
@@ -3267,9 +3307,83 @@
 <platform>
 <name v="4bd5669a-0e4e-4e1c-9625-e982dd945372">
 <name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@General@Output Directory" v="${ProjectDir}\${ProcessorType}\${Platform}\${Config}" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Assembly@General@Additional Include Directories" v="" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Assembly@General@AssemblyGenDebugInfo" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Assembly@General@AssemblyMacroExpansion" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Assembly@General@Preprocessor Definitions" v="DEBUG" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Assembly@General@AssemblyConditionalList" v="False" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Assembly@General@PrintListingFile" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Assembly@General@AssemblyMacroList" v="False" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Assembly@Command Line@Command Line" v="" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@C/C++@General@InlineAsm" v="False" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@C/C++@General@IntPromote" v="False" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@C/C++@General@Additional Include Directories" v="" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@C/C++@General@BrowseInformation" v="False" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@C/C++@General@FloatFuzzy" v="3" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@C/C++@General@GenerateDebugInfo" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@C/C++@General@Preprocessor Definitions" v="DEBUG" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@C/C++@General@WarningLevel" v="2" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@C/C++@General@PrintListingFile" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@C/C++@General@AssemblyCodeList" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@C/C++@General@ListInclude" v="False" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@C/C++@Optimization@OptimizationLevel" v="2" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@C/C++@Optimization@OptimizationEmphasis" v="Size" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@C/C++@Optimization@ObjectAdvanced" v="False" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@C/C++@Command Line@Command Line" v="" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Linker@General@Additional Link Files" v="" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Linker@General@GenerateCodeListing" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Linker@General@RemoveUnused" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Linker@General@Recursions" v="10" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Linker@General@DisableUnrefWarnings" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Linker@General@WarningLevel" v="2" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Linker@General@PrintMapFile" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Linker@General@CrossRef" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Linker@General@GenMemoryMap" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Linker@Debugging@GenDebugLines" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Linker@Debugging@GenDebugPublicSyms" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Linker@Debugging@GenDebugLocalSyms" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Linker@Debugging@SymbolTypeInfoInOutput" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@Linker@Command Line@Command Line" v="" />
 <name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@User Commands@General@Pre Build Commands" v="" />
 <name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Debug@DP8051@User Commands@General@Post Build Commands" v="" />
 <name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@General@Output Directory" v="${ProjectDir}\${ProcessorType}\${Platform}\${Config}" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Assembly@General@Additional Include Directories" v="" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Assembly@General@AssemblyGenDebugInfo" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Assembly@General@AssemblyMacroExpansion" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Assembly@General@Preprocessor Definitions" v="NDEBUG" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Assembly@General@AssemblyConditionalList" v="False" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Assembly@General@PrintListingFile" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Assembly@General@AssemblyMacroList" v="False" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Assembly@Command Line@Command Line" v="" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@C/C++@General@InlineAsm" v="False" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@C/C++@General@IntPromote" v="False" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@C/C++@General@Additional Include Directories" v="" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@C/C++@General@BrowseInformation" v="False" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@C/C++@General@FloatFuzzy" v="3" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@C/C++@General@GenerateDebugInfo" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@C/C++@General@Preprocessor Definitions" v="NDEBUG" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@C/C++@General@WarningLevel" v="2" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@C/C++@General@PrintListingFile" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@C/C++@General@AssemblyCodeList" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@C/C++@General@ListInclude" v="False" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@C/C++@Optimization@OptimizationLevel" v="8" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@C/C++@Optimization@OptimizationEmphasis" v="Size" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@C/C++@Optimization@ObjectAdvanced" v="False" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@C/C++@Command Line@Command Line" v="" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Linker@General@Additional Link Files" v="" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Linker@General@GenerateCodeListing" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Linker@General@RemoveUnused" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Linker@General@Recursions" v="10" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Linker@General@DisableUnrefWarnings" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Linker@General@WarningLevel" v="2" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Linker@General@PrintMapFile" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Linker@General@CrossRef" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Linker@General@GenMemoryMap" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Linker@Debugging@GenDebugLines" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Linker@Debugging@GenDebugPublicSyms" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Linker@Debugging@GenDebugLocalSyms" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Linker@Debugging@SymbolTypeInfoInOutput" v="True" />
+<name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@Linker@Command Line@Command Line" v="" />
 <name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@User Commands@General@Pre Build Commands" v="" />
 <name_val_pair name="4bd5669a-0e4e-4e1c-9625-e982dd945372@Release@DP8051@User Commands@General@Post Build Commands" v="" />
 </name>

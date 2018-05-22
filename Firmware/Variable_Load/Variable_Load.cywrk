@@ -8,6 +8,7 @@
 <files />
 <projects>
 <v>.\Variable_Load.cydsn\Variable_Load.cyprj</v>
+<v>.\Bootloader.cydsn\Bootloader.cyprj</v>
 </projects>
 <workspace_id v="54aaf567-b87d-44a0-b728-e01b8e28ef16" />
 <WriteAppVersionLastSavedWith v="4.2.0.641" />

@@ -57,8 +57,8 @@ void OutputEnable(bool v);
 volatile static int32 systemTimer = 0;
 
 static float fiLimit;
-volatile static int iLimit = DEFAULT_I_LIM;
-volatile static int vSource = 0;
+volatile static uint32 iLimit = DEFAULT_I_LIM;
+volatile static uint16 vSource = 0;
 volatile static int iSource = 0;
 volatile static uint32 dt = 0;
 volatile static int vMin = DEFAULT_V_MIN;
@@ -69,7 +69,7 @@ bool enableOutput = false;
 int main(void)
 {
 	static int i;
-	static int vAve;
+	static uint32 vAve;
 	static char buff[64];
 	static uint8 inBuff[64];
 	static char floatBuff[64];
@@ -233,7 +233,8 @@ int main(void)
 		for (i = 0; i < ADCSAMPLES; i++)
 			vAve += SourceData[i];
 
-		vSource = Source_ADC_CountsTo_mVolts(vAve / 4); // 10*vAve/40
+    vAve = vAve/40;
+		vSource = 10*Source_ADC_CountsTo_mVolts((uint16)(vAve)); // 10*vAve/40
 		if (systemTimer - 20 > SlowTick)
 		{
 			SlowTick = systemTimer;
@@ -256,7 +257,7 @@ int main(void)
 			sprintf(buff, "%6.3f", iLimit / 1000.0f);
 			putString(buff);
 			goToPos(12, 3);
-			sprintf(buff, "%6.3f", vSource / 1000.0f);
+			sprintf(buff, "%6.3f", (float)vSource / 1000.0f);
 			putString(buff);
 			goToPos(12, 4);
 			sprintf(buff, "%6.3f", vMin / 1000.0f);
@@ -291,6 +292,11 @@ int main(void)
 				case 'R':
 					maHours = 0;
 					break;
+        case 'B':
+          Bootloadable_Load();
+          CySoftwareReset();
+          break; // We'll never see this because the previous line resets the
+                 //  processor.
 				default:
 					break;
 				}
