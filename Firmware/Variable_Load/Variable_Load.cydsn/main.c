@@ -71,6 +71,8 @@ int main(void)
 	static int i;
 	static uint32 vAve;
 	static char buff[64];
+  char testBuff[2];
+  uint8_t testBuffIndex = 0;
 	static uint8 inBuff[64];
 	static char floatBuff[64];
 	static uint8_t incCharIndex = 0;
@@ -89,6 +91,7 @@ int main(void)
 	O_Buffer_Start();
 	Source_ADC_Start();
 	I_Source_ADC_Start();
+  UART_Start();
 
 	bool upPressed = false;
 	bool downPressed = false;
@@ -149,7 +152,34 @@ int main(void)
 				USBUART_CDC_Init();
 			}
 		}
-
+    if (0u != USBUART_IsConfigurationChanged())
+    {
+      if (0u != USBUART_GetConfiguration())
+      {
+        USBUART_CDC_Init();
+      }
+    }
+    
+    // UART is used during production test to test programming
+    //  of chip. Test fixture issues '1', expects response of '2'.
+    if (UART_GetRxBufferSize())
+    {
+      while (UART_GetRxBufferSize())
+      {
+        testBuff[testBuffIndex++] = UART_GetChar();
+      }
+      if (testBuff[testBuffIndex - 1] == '1')
+      {
+        UART_PutChar('2');
+      }
+    }
+    if (testBuffIndex > 1)
+    {
+      testBuffIndex = 0;
+      testBuff[0] = '\0';
+      testBuff[1] = '\0';
+    }
+    
 		if (0u == CapSense_IsBusy())
 		{
 			CapSense_UpdateEnabledBaselines();
