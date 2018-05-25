@@ -17,7 +17,9 @@ Repository Contents
 
 Documentation
 --------------
-* **[Hookup Guide](https://learn.sparkfun.com/tutorials/variable-load-hookup-guide)** - Basic hookup guide for the Variable Load.
+
+* **[Hookup Guide - Revised](https://learn.sparkfun.com/tutorials/variable-load-hookup-guide---revised)** - Revised basic hookup guide for the Variable Load.
+* ***[Hookup Guide (RETIRED)](https://learn.sparkfun.com/tutorials/variable-load-hookup-guide)** - Basic hookup guide for the Variable Load for boards purchased purchased prior to 24 May 2018.*
 
 License Information
 -------------------
