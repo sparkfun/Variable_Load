@@ -4,10 +4,15 @@
 #include <stdlib.h>
 #include "terminal.h"
 
-#define KPN 19
+#define KPN 20
 #define KPD 100
-#define KIN 1
-#define KID 10
+#define KIN 5
+#define KID 100
+
+#define KPN_P 20
+#define KPD_P 1000
+#define KIN_P 5
+#define KID_P 1000
 
 #define DEFAULT_I_LIM 0
 #define DEFAULT_V_MIN 2000
@@ -58,8 +63,10 @@ volatile static int32 systemTimer = 0;
 
 static float fiLimit;
 volatile static uint32 iLimit = DEFAULT_I_LIM;
+volatile static uint32 pLimit = 50000;
 volatile static uint16 vSource = 0;
 volatile static int iSource = 0;
+volatile static int pSource = 0;
 volatile static uint32 dt = 0;
 volatile static int vMin = DEFAULT_V_MIN;
 volatile static uint32 maHours;
@@ -104,7 +111,11 @@ int main(void)
 	ConversionClock_Start();
 	LCD_Start();
 	LCD_DisplayOn();
-	LCD_PrintString("Hello, world");
+    
+    LCD_Position(0, 0);
+	LCD_PrintString("                ");
+    LCD_Position(1, 0);
+	LCD_PrintString("                ");
 
 	/* DMA Configuration for SourceDMA */
 	SourceDMA_Chan = SourceDMA_DmaInitialize(SourceDMA_BYTES_PER_BURST, SourceDMA_REQUEST_PER_BURST,
@@ -265,7 +276,7 @@ int main(void)
 
     vAve = vAve/40;
 		vSource = 10*Source_ADC_CountsTo_mVolts((uint16)(vAve)); // 10*vAve/40
-		if (systemTimer - 20 > SlowTick)
+		if (systemTimer - 200 > SlowTick)
 		{
 			SlowTick = systemTimer;
 			cls();
@@ -278,23 +289,44 @@ int main(void)
 			goToPos(1, 4);
 			putString("V Min:");
 			goToPos(1, 5);
+            putString("P Source (W):");
+            goToPos(1, 6);
+            putString("P Limit (W):");
+            goToPos(1,7);
 			putString("mA Hours:");
-			goToPos(12, 1);
+			goToPos(15, 1);
 			if (iSource < 0) iSource *= -1;
 			sprintf(buff, "%6.3f", iSource / 1000.0f);
 			putString(buff);
-			goToPos(12, 2);
+			goToPos(15, 2);
 			sprintf(buff, "%6.3f", iLimit / 1000.0f);
 			putString(buff);
-			goToPos(12, 3);
+			goToPos(15, 3);
 			sprintf(buff, "%6.3f", (float)vSource / 1000.0f);
 			putString(buff);
-			goToPos(12, 4);
+			goToPos(15, 4);
 			sprintf(buff, "%6.3f", vMin / 1000.0f);
 			putString(buff);
-			goToPos(12, 5);
+			goToPos(15, 5);
+            sprintf(buff, "%6.2f", (float)pSource / 1000.0f);
+            putString(buff);
+            goToPos(15, 6);
+            sprintf(buff, "%6.2f", (float)pLimit / 1000.0f);
+            putString(buff);
+            goToPos(15, 7);
 			sprintf(buff, "%6.2f", maHours / 3600.0f);
 			putString(buff);
+            
+            goToPos(1,9);
+			putString("I - Set Current Limit");
+            goToPos(1,10);
+			putString("V - Set Minimum Voltage Limit");
+            goToPos(1,11);
+			putString("E(1/0) - Enable/Disable Load");
+            goToPos(1,12);
+			putString("R - Reset mA Hours Counter");
+            goToPos(1,13);
+			putString("P - Set Power Limit");
 
 			sprintf(buff, "I: %.2f V: %.2f", iLimit / 1000.0f, vSource / 1000.0f);
 			LCD_Position(0, 0);
@@ -321,6 +353,11 @@ int main(void)
 					break;
 				case 'R':
 					maHours = 0;
+					break;
+                case 'P':
+                    if (fiLimit > 50.00 ||
+						fiLimit < 0.0) fiLimit = 0.0;
+					pLimit = 1000.0*fiLimit;
 					break;
         case 'B':
           Bootloadable_Load();
@@ -362,11 +399,29 @@ void DoPid()
 
 	iSource = I_Source_ADC_CountsTo_mVolts(iSourceRaw);
 
-	error = iLimit - iSource;
-	integral = integral + error;
-	setPoint = (KPN * iLimit) / KPD + (KIN * integral) / KID + 2000; // Use feed forward plus integral
-	if (setPoint < 0)
-		setPoint = 0;
+    //calculate the drawn power
+    pSource = ((int64)iSource * (int64)vSource) / 1000;
+
+    //if pLimit is reduced from maximum, calculate error based on this number
+    
+    if(pLimit < 50000)
+    {
+	    error = pLimit - pSource;
+        integral = integral + error;
+    	setPoint = (KPN_P * error) / KPD_P + (KIN_P * integral) / KID_P;
+        setPoint+=2000;
+    	if (setPoint < 0)
+    		setPoint = 0;
+    }
+    else
+    {
+        error = iLimit - iSource;
+        integral = integral + error;
+    	setPoint = (KPN * error) / KPD + (KIN * integral) / KID;
+        setPoint+=2000;
+    	if (setPoint < 0)
+    		setPoint = 0;
+    }
 
 	// setPoint is a voltage. We need to convert that
 	//  into an integer that can be fed into our DACs.
@@ -384,11 +439,12 @@ void DoPid()
 		fineSetPoint = 255;
 
 	// Finally, one last check: if the source voltage is below vMin,
-	//  or the total power is greater than 15W,
+	//  or the total power is greater than 50W,
 	//  disable.
+    //DISABLED over-power limit!
 	if ((vSource < vMin) ||
-		(vSource * iLimit > 15000000))
-		OutputEnable(false);
+    	(pSource > 50000))
+    	OutputEnable(false);
 
 	if (enableOutput == false)
 	{
@@ -399,7 +455,7 @@ void DoPid()
 	}
 	else
 	{
-		if (loopCount++ == 100)
+		if (loopCount++ == 1000)
 		{
 			maHours += iSource;
 			loopCount = 0;
